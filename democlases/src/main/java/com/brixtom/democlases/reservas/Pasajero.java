@@ -16,8 +16,8 @@ public class Pasajero {
     private String correo;
     private Double millasAcumuladas;
 
-    public void registrarseEnVuelo(){
-
+    public void registrarseEnVuelo(Vuelo vueloARegistrar){
+        //El pasajero se debe asociar al vuelo.
     }
     public void verificarInformacion(){
 
