@@ -1,0 +1,10 @@
+public class Avion {
+
+  List<Asiento> asientosVip;
+  List<Asiento> asientosEconomico;
+  List<Asiento> asientosMedium;
+  String marca;
+  String modelo;
+  String fabricante; 
+
+}
