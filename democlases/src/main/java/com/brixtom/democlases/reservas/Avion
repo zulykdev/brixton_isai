@@ -1,6 +1,10 @@
 public class Avion {
 
-  List<Asiento> asientosVip;
+  List<Asiento> asientosVip; 
+    // Asiento 1 = 1, 100, N
+    // Asiento 2 = 2, 100, N
+    // Asiento 3 = 3, 100, N
+  
   List<Asiento> asientosEconomico;
   List<Asiento> asientosMedium;
   String marca;
