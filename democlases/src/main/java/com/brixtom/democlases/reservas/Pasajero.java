@@ -30,3 +30,8 @@ public class Pasajero {
     }
 
 }
+
+// Clase Pasajero 
+// 1 Pasajero puede estar/tener 1 ... o muchos ..... ? 
+// 
+
