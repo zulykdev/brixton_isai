@@ -6,4 +6,15 @@ public class Avion {
   String modelo;
   String fabricante; 
 
+ mostrarInfoAsiento(int NumeroAsiento){
+  NumeroAsiento =  15 
+  if (numeroAsiento <= CapacidadPasajero ) {
+   ///estoy buscando .... informacion
+   asientos.get(15);
+  } else {
+     //Ese asiento no existe
+  }
+
+ }
+
 }
