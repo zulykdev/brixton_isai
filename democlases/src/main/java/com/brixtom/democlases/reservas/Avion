@@ -1,7 +1,8 @@
 public class Avion {
   Map<Integer, Asiento> asientosVip; //Aqui debo registrar 30 Asientos en este MAP
   Integer capacidadPasajeros; //30
- 
+  Map<Turbina> turbinas; // deberia registrar  elementos de tipo Turbina
+  Integer capacidadTurbinas; 5
   String marca;
   String modelo;
   String fabricante; 
@@ -18,3 +19,6 @@ public class Avion {
  }
 
 }
+// Clase Avion 
+// 1 Avion puede estar/tener 1 ... o muchos ..... ? turbinas?
+// 
