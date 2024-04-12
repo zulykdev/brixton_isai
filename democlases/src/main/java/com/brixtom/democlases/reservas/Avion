@@ -1,12 +1,7 @@
 public class Avion {
-
-  List<Asiento> asientosVip; 
-    // Asiento 1 = 1, 100, N
-    // Asiento 2 = 2, 100, N
-    // Asiento 3 = 3, 100, N
-  
-  List<Asiento> asientosEconomico;
-  List<Asiento> asientosMedium;
+  Map<Integer, Asiento> asientosVip; //Aqui debo registrar 30 Asientos en este MAP
+  Integer capacidadPasajeros; //30
+ 
   String marca;
   String modelo;
   String fabricante; 
