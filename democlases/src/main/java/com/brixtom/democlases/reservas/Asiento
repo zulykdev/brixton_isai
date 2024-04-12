@@ -1,0 +1,6 @@
+public class Asiento {
+
+   String codigo;
+   Double precio;
+   boolean isReserved;
+}
