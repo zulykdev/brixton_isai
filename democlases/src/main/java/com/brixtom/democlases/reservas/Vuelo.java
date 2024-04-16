@@ -13,10 +13,14 @@ public class Vuelo {
     private String numeroVuelo;
     private LocalDateTime fechaSalida;
     private LocalDateTime fechaLlegada;
-    private List<String> origen;
-    private List<String> destino;
-    private Aerolinea aerolineaVuelo;
-    private Double precio;
+    private Origen origen; // LIMA
+    private List<Escala> escalas; // 0 --- N
+    private Destino destino; // ALEMANIA
+    // private Aerolinea aerolineaVuelo;
+    private List<Asiento> asientos; // los asientos tienen precios diferenciados. 
+    // Los asientos ya estan definidos por cada Vuelo/Avion 
+    // 
+    
     private Boolean disponibilidad;
     private List<String> tipoAvion;
     private LocalTime duracionVuelo;

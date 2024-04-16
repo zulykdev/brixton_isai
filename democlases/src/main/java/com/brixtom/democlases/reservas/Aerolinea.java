@@ -10,6 +10,7 @@ public class Aerolinea {
     private String nombre;
     private String codigo;
     private List<String> destinos;
+    private List<Avion> flota; 
     private String politicaEquipaje;
     private String politicaCancelacion;
 
@@ -27,3 +28,7 @@ public class Aerolinea {
     }
 
 }
+
+// Clase Aerolinea 
+// 1 Aerolinea puede estar/tener 1 ... o muchos ..... ? 
+// 1 Aerolinea puede estar/tener 1 ... o muchos .... ? aviones?

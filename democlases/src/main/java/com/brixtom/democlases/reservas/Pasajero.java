@@ -16,8 +16,8 @@ public class Pasajero {
     private String correo;
     private Double millasAcumuladas;
 
-    public void registrarseEnVuelo(){
-
+    public void registrarseEnVuelo(Vuelo vueloARegistrar){
+        //El pasajero se debe asociar al vuelo.
     }
     public void verificarInformacion(){
 
@@ -30,3 +30,8 @@ public class Pasajero {
     }
 
 }
+
+// Clase Pasajero 
+// 1 Pasajero puede estar/tener 1 ... o muchos ..... ? 
+// 
+
