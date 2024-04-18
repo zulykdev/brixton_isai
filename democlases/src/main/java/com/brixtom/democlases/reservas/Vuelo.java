@@ -2,38 +2,44 @@ package com.brixtom.democlases.reservas;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@Slf4j
 public class Vuelo {
     private String numeroVuelo;
     private LocalDateTime fechaSalida;
     private LocalDateTime fechaLlegada;
-    private Origen origen; // LIMA
-    private List<Escala> escalas; // 0 --- N
-    private Destino destino; // ALEMANIA
+    private String origen; // LIMA
+    private List<String> escalas; // 0 --- N
+    private String destino; // ALEMANIA
     // private Aerolinea aerolineaVuelo;
     private List<Asiento> asientos; // los asientos tienen precios diferenciados. 
     // Los asientos ya estan definidos por cada Vuelo/Avion 
-    // 
-    
     private Boolean disponibilidad;
-    private List<String> tipoAvion;
+    private List<Avion> avion;
     private LocalTime duracionVuelo;
 
-    public void reservasAsiento(){
-
+    public Vuelo(String numVuelo, LocalDateTime fechaSalida,LocalDateTime fechaLlegada, String origen, List<String> escalas,String destino,
+                 List<Asiento> asientos,Boolean disponibilidad, List<Avion> avion,LocalTime duracionVuelo ){
+        setNumeroVuelo(numVuelo);
+        setFechaSalida(fechaSalida);
+        setFechaLlegada(fechaLlegada);
+        setOrigen(origen);
+        setEscalas(new ArrayList<>());
+        setDestino(destino);
+        setAsientos(new ArrayList<>());
+        setDisponibilidad(disponibilidad);
+        setAvion(new ArrayList<>());
+        setDuracionVuelo(duracionVuelo);
     }
-    public void cancelarReserva(){
 
-    }
-    public void modificarReserva(){
-
-    }
     public Vuelo informacionVuelo(){
         return null;
     }
