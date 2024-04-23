@@ -20,7 +20,7 @@ public class Categoria {
       setProductos(new ArrayList<>());
     }
     public void agregarProducto(Producto productoAAgregar){
-        setProductos(List<Producto> productoAAgregar);
+       // setProductos(productoAAgregar);
     }
     public void quitarProducto(Producto productoAAquitar){
 

@@ -13,6 +13,8 @@ import java.util.List;
 public class HistorialMedico {
     private Paciente paciente;
     private List<String> ingresos;
+    private String diagnostico;
+    private String tratamiento;
 
     public HistorialMedico(Paciente paciente){
         setPaciente(paciente);

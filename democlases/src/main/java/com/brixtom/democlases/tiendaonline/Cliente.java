@@ -2,13 +2,12 @@ package com.brixtom.democlases.tiendaonline;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
+import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
-@Slf4j
+@ToString
 public class Cliente {
     private String idCliente;
     private String nombreCliente;
@@ -19,12 +18,6 @@ public class Cliente {
         setNombreCliente(nombreCliente);
         setEMail(eMail);
         setHistorialCompras(new ArrayList<>());
-    }
-    public void mostrarInfoCliente() {
-        log.info("ID de cliente: " + getIdCliente());
-        log.info("Nombre de cliente: " + getNombreCliente());
-        log.info("Correo de cliente: " + getEMail());
-        log.info("Mostrar compras de cliente: " + getHistorialCompras());
     }
 
 }

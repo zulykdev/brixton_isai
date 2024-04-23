@@ -2,6 +2,7 @@ package com.brixtom.democlases.reservas;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Slf4j
+@ToString
 public class Vuelo {
     private String numeroVuelo;
     private LocalDateTime fechaSalida;
@@ -22,12 +23,12 @@ public class Vuelo {
     // private Aerolinea aerolineaVuelo;
     private List<Asiento> asientos; // los asientos tienen precios diferenciados. 
     // Los asientos ya estan definidos por cada Vuelo/Avion 
-    private Boolean disponibilidad;
-    private List<Avion> avion;
+    private EstadoVuelo estado;
+    private Avion avion;
     private LocalTime duracionVuelo;
 
     public Vuelo(String numVuelo, LocalDateTime fechaSalida,LocalDateTime fechaLlegada, String origen, List<String> escalas,String destino,
-                 List<Asiento> asientos,Boolean disponibilidad, List<Avion> avion,LocalTime duracionVuelo ){
+                 List<Asiento> asientos,EstadoVuelo estado, Avion avion,LocalTime duracionVuelo ){
         setNumeroVuelo(numVuelo);
         setFechaSalida(fechaSalida);
         setFechaLlegada(fechaLlegada);
@@ -35,8 +36,8 @@ public class Vuelo {
         setEscalas(new ArrayList<>());
         setDestino(destino);
         setAsientos(new ArrayList<>());
-        setDisponibilidad(disponibilidad);
-        setAvion(new ArrayList<>());
+        setEstado(estado);
+        setAvion(avion);
         setDuracionVuelo(duracionVuelo);
     }
 

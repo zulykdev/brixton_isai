@@ -2,18 +2,24 @@ package com.brixtom.democlases.reservas;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Slf4j
+@ToString
 public class Reserva {
-    private Pasajero pasajeroAReservar;
-    private Vuelo vueloAReserver;
+    private Pasajero pasajero;
+    private String usuario;
+    private Vuelo vuelo;
+    private Asiento asiento;
+    private LocalDateTime fechaHora;
 
     public Reserva(Pasajero pasajero,Vuelo vuelo){
-        setPasajeroAReservar(pasajero);
-        setVueloAReserver(vuelo);
+        setPasajero(pasajero);
+        setVuelo(vuelo);
     }
 
     public void reservarAsiento(){
@@ -25,8 +31,5 @@ public class Reserva {
     public void modificarReserva(){
 
     }
-    public void mostrarInfo() {
-        log.info("Pasajero: " + getPasajeroAReservar());
-        log.info("Detalles del Vuelo: /n" + getVueloAReserver());
-    }
+
 }

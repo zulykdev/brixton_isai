@@ -14,6 +14,7 @@ public class Cita {
     private Medico medico;
     private Paciente paciente;
     private LocalDateTime fechaHora;
+    private Reserva reserva;
 
     public Cita(Medico medico, Paciente paciente, LocalDateTime fechaHora){
         setMedico(medico);

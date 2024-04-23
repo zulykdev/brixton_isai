@@ -1,27 +1,25 @@
 package com.brixtom.democlases.reservas;
 
+import ch.qos.logback.classic.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Setter
 @Getter
-@Slf4j
+@ToString
 public class Asiento {
+    private PosicionAsiento posicion;
+    private String codigo;
+    private Double precio;
+    private boolean isReserved;
 
-    String codigo;
-    Double precio;
-    boolean isReserved;
-
-    public Asiento(String codigo, Double precio, boolean Reserv){
+    public Asiento(PosicionAsiento posicion, String codigo, Double precio, boolean reserv){
+        setPosicion(posicion);
         setCodigo(codigo);
         setPrecio(precio);
-        isReserved = Reserv;
-    }
-    public void infoAsiento(){
-        log.info("Codigo: " + getCodigo());
-        log.info("Precio: " + getPrecio());
-        log.info("¿Asiento disponible?: " + isReserved);
-    }
+        setReserved(reserv);
 
+    }
 }

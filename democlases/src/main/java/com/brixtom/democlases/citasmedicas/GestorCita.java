@@ -10,10 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-public class GestorCitas {
+public class GestorCita {
     private List<Cita> citas;
 
-    public GestorCitas(){
+    public GestorCita(){
         setCitas(new ArrayList<>());
     }
     public void agregarCita(Cita cita) {
