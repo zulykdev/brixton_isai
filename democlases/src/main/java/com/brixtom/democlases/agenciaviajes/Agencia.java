@@ -2,14 +2,14 @@ package com.brixtom.democlases.agenciaviajes;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@Slf4j
+@ToString
 public class Agencia {
     private List<Cliente> clientes;
     private List<Destino> destinos;
