@@ -18,10 +18,11 @@ public class Nomina {
         setPagos(new HashMap<>());
     }
     public void agregarPago(Empleado empleado, double monto) {
-        pagos.put(empleado, monto);
+
     }
 
     public double getPago(Empleado empleado) {
-        return pagos.getOrDefault(empleado, 0.0);
+
+        return 0;
     }
 }
