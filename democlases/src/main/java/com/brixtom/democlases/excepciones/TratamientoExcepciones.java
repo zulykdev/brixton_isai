@@ -1,60 +1,42 @@
 package com.brixtom.democlases.excepciones;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class TratamientoExcepciones {
     public static void main(String[] args) {
         //Solicitar entrada de datos de usuario, debe de ser de tipo entero
         //Mostrar el dato ingresado
-        /*
+
         Scanner sc = new Scanner(System.in);
         int age;
         String iniciar= "y";
-
-        while (iniciar.equals("y")){
-            System.out.println("INGRESE el año de nacimiento: ");
+        while (iniciar.equalsIgnoreCase("y")){
             try {
+                System.out.println("Ingresa tu año de nacimiento: ");
                 age =sc.nextInt();
                 System.out.println("Año de nacimiento: " + age);
+                LocalDate uno = LocalDate.now();
+                int ageActual = uno.getYear();
+                System.out.println("Tu posible edad actual es: " + (ageActual - age));
+
             } catch (Exception e) {
-                System.out.println("información incorrecta: " + e.getMessage());
-        }
-            System.out.println("=============");
-            System.out.println("Desea continuar?: y/n");
-            iniciar = sc.next();
-
-        }*/
-        // ejercicio 2 - 3
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Integer> numeros = new ArrayList<>(); // Lista para almacenar los números ingresados
-        boolean continuar = true;
-
-        do {
-            try {
-                System.out.print("Ingrese un número (o 'c' para continuar): ");
-                String entrada = scanner.next();
-
-                if (entrada.equalsIgnoreCase("c")) {
-                    continuar = false; // Salir del ciclo si se ingresa 'c'
-                } else {
-                    int numero = Integer.parseInt(entrada);
-                    numeros.add(numero); // Agregar el número a la lista
-                    System.out.println("Número agregado: " + numero);
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada no válida. Por favor, ingrese un número o 'c'.");
-                scanner.next(); // Limpiar la entrada no válida del búfer del escáner
+                System.out.println("información incorrecta: " + e.getClass());
+                sc.nextLine();
             }
-        } while (continuar);
-
-        System.out.println("Números ingresados:");
-        for (int numero : numeros) {
-            System.out.print(numero + " ");
+            System.out.println("=============");
+            iniciar = preguntarContinuar(sc);
         }
-
-
-
+        System.out.println("Gracias por usar el aplicativo. Fin del programa.");
+    }
+    private static String preguntarContinuar(Scanner scanner) {
+        System.out.print("¿Desea continuar ingresando números? (y/n): ");
+        String respuesta = scanner.next();
+        while (!respuesta.equalsIgnoreCase("y") && !respuesta.equalsIgnoreCase("n")){
+            System.out.println("favor de ingresar 'y' para continuar o 'n' para salir de la aplicación");
+            respuesta = scanner.next();
+        }
+        return respuesta;
     }
 }
+
