@@ -1,0 +1,7 @@
+#spring.application.name=input
+spring:
+  application:
+    name: 'input'
+server:
+  port: 8080
+
