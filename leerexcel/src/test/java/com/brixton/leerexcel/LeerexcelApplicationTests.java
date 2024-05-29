@@ -1,10 +1,10 @@
-package com.brixton.input;
+package com.brixton.leerexcel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class InputApplicationTests {
+class LeerexcelApplicationTests {
 
 	@Test
 	void contextLoads() {
