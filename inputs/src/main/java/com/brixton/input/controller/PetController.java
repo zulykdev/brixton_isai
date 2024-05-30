@@ -101,18 +101,24 @@ public class PetController{
      * @return
      */
     @GetMapping("/{idPet}")
-    public ResponseEntity<PetResponseDTO> getPets(@PathVariable int idPet){
+    public ResponseEntity<PetResponseDTO> getPets(@PathVariable String idPet){
         /**
          * Proceso de Obtener 1 mascotas
          * 1. Buscar el ID en el Map
          * 2. En caso exista: Devolver la informacion del Paso 1
          * 3. En caso no exista: Mensaje indicando que no se encontró
          */
-        PetResponseDTO petTemporal = petOutputs.get(String.valueOf(idPet)); //Paso 1.
-        if (petTemporal != null) {
-            return ResponseEntity.ok(petTemporal); //Paso 2.
-        } else{
-            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        try {
+
+            PetResponseDTO petTemporal = petOutputs.get(idPet); // traer los pets
+            int petId = Integer.parseInt(idPet); //convertir en integer
+            if (petTemporal != null) {
+                return ResponseEntity.ok(petTemporal);
+            } else {
+                return ResponseEntity.notFound().build(); // retorna 404
+            }
+        } catch (NumberFormatException e) {
+            return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
         }
     }
 
