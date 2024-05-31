@@ -3,6 +3,7 @@ package com.brixton.input.controller;
 import com.brixton.input.dto.request.PetGenericRequestDTO;
 import com.brixton.input.dto.request.UserRequestDTO;
 import com.brixton.input.dto.response.PetResponseDTO;
+import com.brixton.input.dto.response.StoreResponseDTO;
 import com.brixton.input.dto.response.UserResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatusCode;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @RestController
 @RequestMapping("/v1/user")
@@ -31,10 +34,12 @@ public class UserController {
          * 4. Devuelvo el objeto creado (paso 2)
          */
         userInputs.put(String.valueOf(input.getId()), input);
+        log.info("valor del Input: " + input);
         //Almacena la información para ser devuelta -response-
         UserResponseDTO userTemp = new UserResponseDTO();
         userTemp.setId(input.getId());
         userTemp.setUserName(input.getUserName());
+
         userTemp.setFirstName(input.getFirstName());
         userTemp.setLastName(input.getLastName());
         userTemp.setEmail(input.getEmail());
@@ -62,17 +67,17 @@ public class UserController {
          * 2. En caso exista: Devolver la informacion del Paso 1
          * 3. En caso no exista: Mensaje indicando que no se encontró
          */
-        try {
-
-            UserResponseDTO userTemp = userOutputs.get(userName); // ubicar al usuario en userTemp
-            if (userTemp != null) {
-                return ResponseEntity.ok(userTemp);
-            } else {
-                return ResponseEntity.notFound().build(); // retorna 404
+        UserResponseDTO userFound= null;
+        for (UserResponseDTO parcial: userOutputs.values()){
+            if (userName.equals(parcial.getUserName())){
+                userFound=parcial;
+                return ResponseEntity.ok(userFound);
             }
-        } catch (NumberFormatException e) {
-            return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
         }
+        /*if(userFound!=null){
+            return ResponseEntity.ok(userFound);
+        }*/
+        return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
     }
 
     /**
