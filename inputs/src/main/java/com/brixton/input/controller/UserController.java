@@ -70,7 +70,7 @@ public class UserController {
         UserResponseDTO userFound= null;
         for (UserResponseDTO parcial: userOutputs.values()){
             if (userName.equals(parcial.getUserName())){
-                userFound=parcial;
+                userFound=parcial; //asigna el contenido de parcil en userFound
                 return ResponseEntity.ok(userFound);
             }
         }
