@@ -22,7 +22,7 @@ import java.util.Map;
 public class UserController {
     Map<String, UserRequestDTO> userInputs = new HashMap<>();
     Map<String, UserResponseDTO> userOutputs = new HashMap<>();
-
+    Map<String, String> userLoggeds =new HashMap<>();
     @PostMapping("/")
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO input){
         /**
@@ -33,13 +33,12 @@ public class UserController {
          * 3. Almacenar el objeto creado anteriormente (paso 2) en una coleccion, petOutputs
          * 4. Devuelvo el objeto creado (paso 2)
          */
-        userInputs.put(String.valueOf(input.getId()), input);
-        log.info("valor del Input: " + input);
+        userInputs.put(String.valueOf(input.getUserName()), input);
+        //log.info("valor del Input: " + input);
         //Almacena la información para ser devuelta -response-
         UserResponseDTO userTemp = new UserResponseDTO();
         userTemp.setId(input.getId());
         userTemp.setUserName(input.getUserName());
-
         userTemp.setFirstName(input.getFirstName());
         userTemp.setLastName(input.getLastName());
         userTemp.setEmail(input.getEmail());
@@ -48,7 +47,7 @@ public class UserController {
         userTemp.setUserStatus(input.getUserStatus());
         userTemp.setCreatedAt(LocalDate.now().toString());
 
-        userOutputs.put(String.valueOf(input.getId()), userTemp);
+        userOutputs.put(String.valueOf(input.getUserName()), userTemp);
         //return new ResponseEntity<>(HttpStatusCode.valueOf(204));
         return ResponseEntity.ok(userTemp);
     }
@@ -67,17 +66,23 @@ public class UserController {
          * 2. En caso exista: Devolver la informacion del Paso 1
          * 3. En caso no exista: Mensaje indicando que no se encontró
          */
-        UserResponseDTO userFound= null;
-        for (UserResponseDTO parcial: userOutputs.values()){
-            if (userName.equals(parcial.getUserName())){
-                userFound=parcial; //asigna el contenido de parcil en userFound
-                return ResponseEntity.ok(userFound);
-            }
+        UserResponseDTO userFound= userOutputs.get(userName);
+        if (userName!=null){
+            return ResponseEntity.ok(userFound);
+        } else {
+            return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
         }
+
+//        for (UserResponseDTO parcial: userOutputs.values()){
+//            if (userName.equals(parcial.getUserName())){
+//                userFound=parcial; //asigna el contenido de parcil en userFound
+//                return ResponseEntity.ok(userFound);
+//            }
+//        }
         /*if(userFound!=null){
             return ResponseEntity.ok(userFound);
         }*/
-        return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
+       // return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
     }
 
     /**
@@ -86,33 +91,29 @@ public class UserController {
      * @return 200 + objeto actualizado
      *          404 Si no se pudo actualizar
      */
-    @PutMapping("/{userId}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable String userId, @RequestBody UserRequestDTO userAActualizar) {
+    @PutMapping("/{userName}")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable String userName, @RequestBody UserRequestDTO userAActualizar) {
         /**
          * Proceso de actualizar usuario
          * 1. Buscar el User utilizando el Id ingresado
          * 2. En caso exista: Acualizar la información en el objeto encontrado
          * 3. En caso no exista: devolver 404
          */
-        try {
-            UserResponseDTO userTemp= userOutputs.get(userId); //Paso 1.
-            if (userTemp != null) { //En caso Exista
-                // userTemp.setId(); //No debe hacerse porque se altera el identificador
-                userTemp.setUserName(userAActualizar.getUserName());
-                userTemp.setFirstName(userAActualizar.getFirstName());
-                userTemp.setLastName(userAActualizar.getLastName());
-                userTemp.setEmail(userAActualizar.getEmail());
-                userTemp.setPassword(userAActualizar.getPassword());
-                userTemp.setPhone(userAActualizar.getPhone());
-                userTemp.setUserStatus(userAActualizar.getUserStatus());
-                //userTemp.setCreatedAt();//No debe hacerse porque se altera la fecha de creacion
-                userTemp.setUpdateAt(LocalDateTime.now().toString());
-                return ResponseEntity.ok(userTemp);
-            } else {
-                return new ResponseEntity<>(HttpStatusCode.valueOf(404));
-            }
-        }catch (NumberFormatException e){
-            return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
+        UserResponseDTO userTemp= userOutputs.get(userName);
+        if (userTemp != null) { //En caso Exista
+            userTemp.setId(userAActualizar.getId()); //No debe hacerse porque se altera el identificador
+            //userTemp.setUserName(userAActualizar.getUserName());
+            userTemp.setFirstName(userAActualizar.getFirstName());
+            userTemp.setLastName(userAActualizar.getLastName());
+            userTemp.setEmail(userAActualizar.getEmail());
+            userTemp.setPassword(userAActualizar.getPassword());
+            userTemp.setPhone(userAActualizar.getPhone());
+            userTemp.setUserStatus(userAActualizar.getUserStatus());
+            //userTemp.setCreatedAt();//No debe hacerse porque se altera la fecha de creacion
+            userTemp.setUpdateAt(LocalDateTime.now().toString());
+            return ResponseEntity.ok(userTemp);
+        } else {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
         }
 
     }
@@ -123,26 +124,49 @@ public class UserController {
      * @return  204 si se elimino con exito
      *          404 si no se pudo eliminar -no se encontro el user, -identificador malformado-
      */
-    @DeleteMapping("/{userId}")
-    public ResponseEntity deleteUser(@PathVariable int userId){
+    @DeleteMapping("/{userName}")
+    public ResponseEntity deleteUser(@PathVariable String userName){
         /**
          * Proceso de eliminar usuario
          * 1. Buscar el user utilizando el Id ingresado
          * 2. En caso exista: debe eliminarse y devolver 204.
          * 3. En caso no exista: devolver 404
          */
-        try {
-            UserResponseDTO userTemp = userOutputs.get(userId); //Paso 1.
-            if (userTemp != null) {
-                userOutputs.remove(userId);
-                return new ResponseEntity<>(HttpStatusCode.valueOf(204)); //Paso 2.
-            } else{
-                return new ResponseEntity<>(HttpStatusCode.valueOf(404));
-            }
-        } catch (NumberFormatException e){
-            return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
+        UserResponseDTO userTemp = userOutputs.get(userName); //Paso 1.
+        if (userTemp != null) {
+            userOutputs.remove(userName);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(204)); //Paso 2.
+        } else{
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
         }
+    }
 
+    @GetMapping("/login")
+    public ResponseEntity<UserResponseDTO> login(@RequestParam(name="userName") String userName,@RequestParam(name="pwd") String pwd){
+        UserResponseDTO userTemp =userOutputs.get(userName);
+        if (userTemp!=null && userTemp.getPassword().equals(pwd)){
+            String logged = userLoggeds.get(userName);
+            if (logged==null){
+                userLoggeds.put(userTemp.getUserName(), userTemp.getUserName());
+                return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+            } else {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+            }
+        }   else {
+                return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        }
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<UserResponseDTO> logout(@RequestParam String userName) {
+        String logged = userLoggeds.get(userName);
+
+        if (logged != null) {
+            userLoggeds.remove(logged);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        } else {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        }
     }
 
 
