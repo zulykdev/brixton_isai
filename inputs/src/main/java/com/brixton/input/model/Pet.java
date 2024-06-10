@@ -7,11 +7,11 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
-public class Pet {
+public class Pet extends ObjectAudit {
 
-    int id;
+    Integer id;
     String name;
     LocalDate birthdate;
     Category category;
-    StatusType status;
+    PetStatusType status;
 }

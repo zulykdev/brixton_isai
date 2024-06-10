@@ -2,7 +2,9 @@ package com.brixton.input.controller;
 
 import com.brixton.input.dto.request.PetGenericRequestDTO;
 import com.brixton.input.dto.response.PetResponseDTO;
+import com.brixton.input.service.PetService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,9 @@ import java.util.Map;
 @Slf4j
 public class PetController{
 
-    Map<String, PetGenericRequestDTO> petInputs = new HashMap<>();
-    Map<String, PetResponseDTO> petOutputs = new HashMap<>();
+    @Autowired
+    private PetService petService;
+
 
     /**
      * endpoint: PUT | /{idPet}
@@ -29,26 +32,18 @@ public class PetController{
      *          404 Si no se pudo actualizar
      */
     @PutMapping("/{idPet}")
-    public ResponseEntity<PetResponseDTO> updatePet(@PathVariable int idPet, @RequestBody PetGenericRequestDTO petAActualizar) {
+    public ResponseEntity<Object> updatePet(@PathVariable int idPet, @RequestBody PetGenericRequestDTO petForUpdate) {
         /**
          * Proceso de eliminar mascota
          * 1. Buscar el Pet utilizando el Id ingresado
          * 2. En caso exista: Acualizar la información en el objeto encontrado
          * 3. En caso no exista: devolver 404
          */
-        PetResponseDTO petTemporal = petOutputs.get(String.valueOf(idPet)); //Paso 1.
-        if (petTemporal != null) { //En caso Exista
-            petTemporal.setBirthdate(petAActualizar.getBrithdate());
-            // petTemporal.setId(); //No debe hacerse porque se altera el identificador
-            petTemporal.setName(petAActualizar.getName());
-            petTemporal.setCategory(petAActualizar.getCategory());
-            //petTemporal.setCreatedAt();//No debe hacerse porque se altera la fecha de creacion
-            petTemporal.setStatus(petAActualizar.getStatus());
-            petTemporal.setUpdatedAt(LocalDateTime.now().toString());
-            return ResponseEntity.ok(petTemporal);
-        } else {
-            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        Object petUpdated = petService.updatePet(idPet, petForUpdate);
+        if (petUpdated != null) {
+            return ResponseEntity.ok(petUpdated);
         }
+        return new ResponseEntity<>(HttpStatusCode.valueOf(404));
     }
 
 
@@ -66,13 +61,11 @@ public class PetController{
          * 2. En caso exista: debe eliminarse y devolver 204.
          * 3. En caso no exista: devolver 404
          */
-        PetResponseDTO petTemporal = petOutputs.get(String.valueOf(idPet)); //Paso 1.
-        if (petTemporal != null) {
-            petOutputs.remove(String.valueOf(idPet));
+        boolean successfull = petService.deletePet(idPet);
+        if (successfull) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(204)); //Paso 2.
-        } else{
-            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
         }
+        return new ResponseEntity<>(HttpStatusCode.valueOf(404));
     }
 
     /**
@@ -81,17 +74,8 @@ public class PetController{
      * @return
      */
     @GetMapping("/")
-    public ResponseEntity<List<PetResponseDTO>> getPets(){
-        /**
-         * Proceso de Obtener mascotas
-         * 1. Convertir el Mapa de petOutputs a una Lista
-         * 2. Devolver la lista
-         */
-        List<PetResponseDTO> petResponseTemps = new ArrayList<>();
-        petResponseTemps.addAll(petOutputs.values());
-
-        //return ResponseEntity.ok(new ArrayList<>(petOutputs.values()));
-        return ResponseEntity.ok(petResponseTemps);
+    public ResponseEntity<List<Object>> getPets(){
+        return ResponseEntity.ok(petService.getPets());
     }
 
     /**
@@ -101,27 +85,14 @@ public class PetController{
      * @return
      */
     @GetMapping("/{idPet}")
-    public ResponseEntity<PetResponseDTO> getPets(@PathVariable String idPet){
-        /**
-         * Proceso de Obtener 1 mascotas
-         * 1. Buscar el ID en el Map
-         * 2. En caso exista: Devolver la informacion del Paso 1
-         * 3. En caso no exista: Mensaje indicando que no se encontró
-         */
-        try {
-
-            PetResponseDTO petTemporal = petOutputs.get(idPet); // traer los pets
-            int petId = Integer.parseInt(idPet); //convertir en integer
-            if (petTemporal != null) {
-                return ResponseEntity.ok(petTemporal);
-            } else {
-                return ResponseEntity.notFound().build(); // retorna 404
-            }
-        } catch (NumberFormatException e) {
-            return ResponseEntity.notFound().build(); // retorna 404 con cualquier informacion ingresda
+    public ResponseEntity<Object> getPet(@PathVariable int idPet){
+        Object petFound = petService.getPet(idPet);
+        if (petFound != null) {
+            return ResponseEntity.ok(petFound);
+        } else{
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
         }
     }
-
 
     /**
      * endpoint: POST | /
@@ -130,28 +101,8 @@ public class PetController{
      * @return El Pet creado + fecha creacion (createdAt)
      */
     @PostMapping("/")
-    public ResponseEntity<PetResponseDTO> createPet(@RequestBody PetGenericRequestDTO input){
-        /**
-         * Proceso de Registro De Mascotas:
-         * 1. Almacena el valor de entrada en una coleccion, petInputs
-         * 2. Crea un objeto de tipo PetResponseDTO, con el objetivo de colocar el valor de fecha de creacion
-         *    Es decir, createAt.
-         * 3. Almacenar el objeto creado anteriormente (paso 2) en una coleccion, petOutputs
-         * 4. Devuelvo el objeto creado (paso 2)
-         */
-        petInputs.put(String.valueOf(input.getId()), input);
-        //Almacena la informacion para ser devuelta -response-
-        PetResponseDTO ptr = new PetResponseDTO();
-        ptr.setId(input.getId());
-        ptr.setName(input.getName());
-        ptr.setCategory(input.getCategory());
-        ptr.setStatus(input.getStatus());
-        ptr.setCreatedAt(LocalDate.now().toString());
-        ptr.setBirthdate(input.getBrithdate());
-        petOutputs.put(String.valueOf(input.getId()), ptr);
-        //return ResponseEntity.ok(ptr);
-        //return new ResponseEntity<>(HttpStatusCode.valueOf(204));
-        return ResponseEntity.ok(ptr);
+    public ResponseEntity<Object> createPet(@RequestBody PetGenericRequestDTO input){
+        return ResponseEntity.ok(petService.savePet(input));
     }
 
 }

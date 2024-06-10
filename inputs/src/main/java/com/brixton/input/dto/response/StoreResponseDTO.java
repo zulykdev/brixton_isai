@@ -12,5 +12,9 @@ public class StoreResponseDTO {
     String shipDate;
     String status;
     boolean complete;
+    String createdAt;
+    String createdBy;
     String updatedAt;
+    String updatedBy;
+
 }
