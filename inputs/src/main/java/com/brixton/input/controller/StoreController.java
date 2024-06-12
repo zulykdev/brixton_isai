@@ -46,9 +46,8 @@ public class StoreController {
 
     @GetMapping("/inventory/{status}")
     public ResponseEntity<List<Object>> getInventory(@PathVariable String status) {
-        List<Object> ordersFound = new ArrayList<>();
-        ordersFound = storeService.getInventory(status);
-        if (ordersFound!=null){
+        List<Object> ordersFound = storeService.getInventory(status);
+        if (!ordersFound.isEmpty()){
             return ResponseEntity.ok(ordersFound);
         } else {
             return new ResponseEntity<>(HttpStatusCode.valueOf(404)); // retorna 404
