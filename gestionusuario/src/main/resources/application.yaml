@@ -1,0 +1,6 @@
+#spring.application.name=gestionusuario
+spring:
+    application:
+        name: 'gestionusuario'
+server:
+    port: 8080
