@@ -2,6 +2,7 @@ package com.brixton.gestionusuario.service;
 
 import com.brixton.gestionusuario.dto.request.UserRequestDTO;
 import com.brixton.gestionusuario.dto.response.UserResponseDTO;
+import com.brixton.gestionusuario.model.PermissionType;
 import com.brixton.gestionusuario.model.User;
 import com.brixton.gestionusuario.model.mappers.CustomDateDeserializer;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -129,7 +131,25 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Object getPermissionsOfUser(int idUser) {
-        return null;
+    public List<String> getPermissionsOfUser(int idUser) {
+        List<String> permissions=new ArrayList<>();
+        for(User user :users.values()){
+            try {
+                if(user.getId()==idUser){
+                    String jsonOutput = objectMapper.writeValueAsString(user);
+                    UserResponseDTO output = objectMapper.readValue(jsonOutput, UserResponseDTO.class);
+                    //rolOfUser.add(user);
+                    //List<PermissionType> list = new ArrayList<>();
+                    for (PermissionType permissionType : user.getRol().getPermissions()) {
+                        permissions.add(permissionType.toString());
+                    }
+
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        return permissions;
     }
 }

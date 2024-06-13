@@ -52,14 +52,13 @@ public class UserController {
         }
     }
     @GetMapping("/{userId}/permission")
-    public ResponseEntity<Object> getPermissionOfUser(@PathVariable int userId){
-//        Object orderFound = storeService.getOrder(orderId);
-//        if (orderFound != null) {
-//            return ResponseEntity.ok(orderFound);
-//        } else {
-//            return ResponseEntity.notFound().build(); // retorna 404
-//        }
-        return null;
+    public ResponseEntity<List<String>> getPermissionsOfUser(@PathVariable int userId){
+        List<String> permissionsOfUser = userService.getPermissionsOfUser(userId);
+        if (!permissionsOfUser.isEmpty()){
+            return ResponseEntity.ok(permissionsOfUser);
+        } else {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404)); // retorna 404
+        }
     }
 
 
