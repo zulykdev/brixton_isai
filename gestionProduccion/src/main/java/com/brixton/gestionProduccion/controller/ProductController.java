@@ -1,8 +1,6 @@
 package com.brixton.gestionProduccion.controller;
 
 import com.brixton.gestionProduccion.dto.request.ProductRequestDTO;
-import com.brixton.gestionProduccion.model.Category;
-import com.brixton.gestionProduccion.model.Product;
 import com.brixton.gestionProduccion.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +8,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/product/")
