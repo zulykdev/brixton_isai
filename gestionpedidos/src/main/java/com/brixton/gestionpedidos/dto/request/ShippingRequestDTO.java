@@ -9,5 +9,5 @@ public class ShippingRequestDTO {
     private int id;
     private String trackNumber;
     private String address;
-    private String status;
+    private int status;
 }
