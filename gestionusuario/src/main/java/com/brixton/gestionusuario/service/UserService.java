@@ -9,6 +9,6 @@ public interface UserService {
     Object getUser(int idUser);
     Object updateUser(int idUSer, UserRequestDTO userForUpdate);
     List<String> getRolOfUser(int idUser);
-    List<String> getPermissionsOfUser (int idUser);
+    List<String> getPermissionsOfUser(int idUser);
 
 }
