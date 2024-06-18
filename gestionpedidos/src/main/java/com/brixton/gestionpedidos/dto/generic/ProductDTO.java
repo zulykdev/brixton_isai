@@ -1,12 +1,13 @@
-package com.brixton.gestionpedidos.dto.request;
+package com.brixton.gestionpedidos.dto.generic;
 
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
-public class ProductRequestDTO {
+public class ProductDTO {
     private int id;
     private String name;
-    private double price;
+    private String category;
+
 }

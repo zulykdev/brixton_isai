@@ -4,10 +4,10 @@ import lombok.ToString;
 
 @ToString
 public enum TypeStatus {
-    PREPARING(1),
-    SENT(2),
-    IN_TRANSIT(3),
-    DELIVERED(4);
+    PREPARING(0),
+    SENT(1),
+    IN_TRANSIT(2),
+    DELIVERED(3);
 
     private Integer status;
 

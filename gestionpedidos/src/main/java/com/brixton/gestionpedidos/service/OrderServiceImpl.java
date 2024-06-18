@@ -3,7 +3,6 @@ package com.brixton.gestionpedidos.service;
 import com.brixton.gestionpedidos.dto.request.OrderRequestDTO;
 import com.brixton.gestionpedidos.dto.response.OrderResponseDTO;
 import com.brixton.gestionpedidos.model.Order;
-import com.brixton.gestionpedidos.model.TypeStatus;
 import com.brixton.gestionpedidos.model.mappers.CustomDateDeserializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -47,10 +46,11 @@ public class OrderServiceImpl implements OrderService{
         try {
             String jsonInput = objectMapper.writeValueAsString(newOrder);
             Order order = objectMapper.readValue(jsonInput, Order.class);
+            order.getInvoice().setOrderId(order.getId());
+            //order.getInvoice().getOrdersLine().get(order.getId());
             order.setCreatedAt(LocalDateTime.now());
             order.setCreatedBy(USER_APP);
             orders.put(order.getId(), order);
-            //log.info("datos ingresados: "+ order);
             String jsonOutput = objectMapper.writeValueAsString(order);
             OrderResponseDTO output = objectMapper.readValue(jsonOutput, OrderResponseDTO.class);
             return output;
@@ -87,41 +87,17 @@ public class OrderServiceImpl implements OrderService{
         }
         return null;
     }
-
-//    @Override
-//    public Object getStatusShipping(int orderId) {
-//        Order orderFound = orders.get(orderId);
-//        try {
-//            String jsonOutput = objectMapper.writeValueAsString(orderFound);
-//            OrderResponseDTO output = objectMapper.readValue(jsonOutput, OrderResponseDTO.class);
-//            //String status = output.getShipping().getStatus();
-//            //log.info("datos del estado: "+ status);
-//            return output.getShipping().getStatus();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-@Override
-public String getStatusShipping(int orderId) {
-    Order orderFound = orders.get(orderId);
-
-    try {
-        String jsonOutput = objectMapper.writeValueAsString(orderFound);
-        OrderResponseDTO output = objectMapper.readValue(jsonOutput, OrderResponseDTO.class);
-        //String status = output.getShipping().getStatus();
-        //log.info("datos del estado: "+ status);
-
-        for (TypeStatus typeStatus: TypeStatus.values()){
-            if (typeStatus.getStatus){
-                return typeStatus.getDescription();
-            }
+    @Override
+    public String getStatusShipping(int orderId) {
+        Order orderFound = orders.get(orderId);
+        try {
+            String jsonOutput = objectMapper.writeValueAsString(orderFound);
+            OrderResponseDTO output = objectMapper.readValue(jsonOutput, OrderResponseDTO.class);
+            return output.getShipping().getStatus();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //return output.getShipping().getStatus();
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}
 
 }

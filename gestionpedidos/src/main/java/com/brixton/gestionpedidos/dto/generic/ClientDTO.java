@@ -1,11 +1,11 @@
-package com.brixton.gestionpedidos.dto.request;
+package com.brixton.gestionpedidos.dto.generic;
 
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
-public class ClientRequestDTO {
+public class ClientDTO {
     private int id;
     private String name;
     private String address;

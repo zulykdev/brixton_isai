@@ -1,11 +1,10 @@
 package com.brixton.gestionpedidos.model.mappers;
 
-import com.brixton.gestionpedidos.dto.request.ClientRequestDTO;
-import com.brixton.gestionpedidos.model.Client;
-import com.brixton.gestionpedidos.model.Direction;
+import com.brixton.gestionpedidos.dto.generic.ClientDTO;
+import com.brixton.gestionpedidos.model.Address;
 
 public class DirectionMapper {
-    public Direction mappDireccionDTOToDireccion(ClientRequestDTO client) {
+    public Address mappDireccionDTOToDireccion(ClientDTO client) {
         String[] partesDireccion = client.getAddress().split(",");
 
         String calle = partesDireccion[0].trim();
@@ -16,7 +15,7 @@ public class DirectionMapper {
         String pais = partesDireccion[4].trim();
         String codigoPostal = partesDireccion[5].trim();
 
-        Direction direction = new Direction();
+        Address direction = new Address();
         direction.setNameStreet(calle);
         direction.setNumberHouse(numero);
         direction.setProvincia(provincia);

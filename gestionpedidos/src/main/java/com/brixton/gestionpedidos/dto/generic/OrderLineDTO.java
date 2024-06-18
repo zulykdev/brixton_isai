@@ -1,16 +1,13 @@
-package com.brixton.gestionpedidos.model;
+package com.brixton.gestionpedidos.dto.generic;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @ToString
-public class OrderLine {
+public class OrderLineDTO {
     private int cantidad;
-    private Product producto;
+    private ProductDTO producto;
     private double precioUnitario;
     private double totalLine;
-
 }
