@@ -9,7 +9,7 @@ import java.util.List;
 @ToString
 public class OrderRequestDTO {
     private int id;
-    private List<orderLineRequestDTO> ordersLine;
+    private List<OrderLineRequestDTO> ordersLine;
     private ClientRequestDTO client;
     private InvoiceRequestDTO invoice;
     private ShippingRequestDTO shipping;

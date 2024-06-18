@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class orderLineRequestDTO {
+public class OrderLineRequestDTO {
     private int cantidad;
     private ProductRequestDTO producto;
     //private double precioUnitario;

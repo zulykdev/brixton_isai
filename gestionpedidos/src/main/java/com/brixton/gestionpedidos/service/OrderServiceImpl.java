@@ -111,8 +111,9 @@ public String getStatusShipping(int orderId) {
         OrderResponseDTO output = objectMapper.readValue(jsonOutput, OrderResponseDTO.class);
         //String status = output.getShipping().getStatus();
         //log.info("datos del estado: "+ status);
+
         for (TypeStatus typeStatus: TypeStatus.values()){
-            if (typeStatus.getCode() == output.getShipping().getStatus()){
+            if (typeStatus.getStatus){
                 return typeStatus.getDescription();
             }
         }
