@@ -8,14 +8,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserResponseDTO {
-    int id;
-    String userName;
-    String firstName;
-    String lastName;
-    String email;
-    String password;
-    String phone;
-    int userStatus;
-    String createdAt;
-    String updateAt;
+    private int id;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String phone;
+    private String userStatus;
+    private String createdAt;
+    private String createdBy;
+    private String updatedAt;
+    private String updatedBy;
 }

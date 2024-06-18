@@ -1,12 +1,13 @@
-package com.brixton.input.dto.request;
+package com.brixton.input.model;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
-public class UserRequestDTO {
+public class User extends ObjectAudit{
     private int id;
     private String userName;
     private String firstName;
@@ -14,5 +15,5 @@ public class UserRequestDTO {
     private String email;
     private String password;
     private String phone;
-    private int userStatus;
+    private UserStatus userStatus;
 }
