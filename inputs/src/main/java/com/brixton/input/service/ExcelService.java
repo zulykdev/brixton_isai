@@ -19,7 +19,7 @@ public class ExcelService {
         System.out.println("Cantidad de Personas: " + Persona.getCantidadPersonas());
         System.out.println(juanito);
         Persona jk = new Persona("JK");
-
+        System.out.println("Cantidad de Personas: " + Persona.getCantidadPersonas());
         System.out.println("Cantidad de Personas: " + Persona.getCantidadPersonas());
 
 
