@@ -4,8 +4,9 @@ import com.brixton.gestionpedidos.dto.request.OrderRequestDTO;
 import com.brixton.gestionpedidos.dto.response.OrderResponseDTO;
 import com.brixton.gestionpedidos.model.Address;
 import com.brixton.gestionpedidos.model.Order;
+import com.brixton.gestionpedidos.model.TypeStatus;
 import com.brixton.gestionpedidos.model.mappers.CustomDateDeserializer;
-import com.brixton.gestionpedidos.model.mappers.DirectionMapper;
+import com.brixton.gestionpedidos.model.mappers.AddressMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,21 +48,18 @@ public class OrderServiceImpl implements OrderService{
     public Object saveOrder(OrderRequestDTO newOrder) {
         try {
             String addressDTO = newOrder.getInvoice().getClient().getAddressClient();
-            Address address = DirectionMapper.mapAddressDTOToAddress(addressDTO);
-            log.info("imprime address: "+ address);
+            Address address = AddressMapper.mapAddressDTOToAddress(addressDTO); //log.info("imprime address: "+ address);
             String jsonInput = objectMapper.writeValueAsString(newOrder);
             Order order = objectMapper.readValue(jsonInput, Order.class);
             order.getInvoice().setOrderId(order.getId());
             order.getInvoice().getClient().setAddress(address);
-
-
-
-            //order.getInvoice().getOrdersLine().get(order.getId());
+            order.getShipping().setAddress(addressDTO);
+            order.getShipping().setStatus(TypeStatus.PREPARING);
+            order.getShipping().setTrackNumber(String.valueOf(order.getId()) +"-"+ String.valueOf(order.getShipping().getId()));
             order.setCreatedAt(LocalDateTime.now());
             order.setCreatedBy(USER_APP);
             orders.put(order.getId(), order);
-            String jsonOutput = objectMapper.writeValueAsString(order);
-            log.info(jsonOutput);
+            String jsonOutput = objectMapper.writeValueAsString(order); //log.info(jsonOutput);
             OrderResponseDTO output = objectMapper.readValue(jsonOutput, OrderResponseDTO.class);
 
             return output;

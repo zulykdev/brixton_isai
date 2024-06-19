@@ -1,18 +1,14 @@
 package com.brixton.gestionpedidos.model.mappers;
 
-import com.brixton.gestionpedidos.dto.generic.ClientDTO;
 import com.brixton.gestionpedidos.model.Address;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DirectionMapper {
+public class AddressMapper {
     public static Address mapAddressDTOToAddress(String addressInput) {
-        log.info(addressInput);
-        String[] partesDireccion = addressInput.split(",");//Jr. Amazonas,465,Huancayo,Junin,Perú,51064
-        log.info("partes dirección: "+ partesDireccion);
+        String[] partesDireccion = addressInput.split(",");//ejemplo de ingreso: Jr. Amazonas,465,Huancayo,Junin,Perú,51064
         String calle = partesDireccion[0].trim();
-        String numero = partesDireccion[1].trim();
-        //int numero = Integer.parseInt(partesDireccion[1].trim());
+        String numero = partesDireccion[1].trim(); //int numero = Integer.parseInt(partesDireccion[1].trim());
         String provincia = partesDireccion[2].trim();
         String departamento = partesDireccion[3].trim();
         String pais = partesDireccion[4].trim();
