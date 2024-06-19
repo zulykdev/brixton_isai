@@ -2,11 +2,14 @@ package com.brixton.gestionpedidos.model.mappers;
 
 import com.brixton.gestionpedidos.dto.generic.ClientDTO;
 import com.brixton.gestionpedidos.model.Address;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DirectionMapper {
-    public Address mappDireccionDTOToDireccion(ClientDTO client) {
-        String[] partesDireccion = client.getAddress().split(",");
-
+    public static Address mapAddressDTOToAddress(String addressInput) {
+        log.info(addressInput);
+        String[] partesDireccion = addressInput.split(",");//Jr. Amazonas,465,Huancayo,Junin,Perú,51064
+        log.info("partes dirección: "+ partesDireccion);
         String calle = partesDireccion[0].trim();
         String numero = partesDireccion[1].trim();
         //int numero = Integer.parseInt(partesDireccion[1].trim());
@@ -15,14 +18,22 @@ public class DirectionMapper {
         String pais = partesDireccion[4].trim();
         String codigoPostal = partesDireccion[5].trim();
 
-        Address direction = new Address();
-        direction.setNameStreet(calle);
-        direction.setNumberHouse(numero);
-        direction.setProvincia(provincia);
-        direction.setDepartamento(departamento);
-        direction.setPais(pais);
-        direction.setCodigoPostal(codigoPostal);
+        Address address = new Address();
+        address.setNameStreet(calle);
+        address.setNumberHouse(numero);
+        address.setProvincia(provincia);
+        address.setDepartamento(departamento);
+        address.setPais(pais);
+        address.setCodigoPostal(codigoPostal);
 
-        return direction;
+        return address;
     }
+
+    public static String mapAddressToAddressDTO(Address addressInput){
+        String address = addressInput.getNameStreet() + "," + addressInput.getNumberHouse() + "," + addressInput.getProvincia() + "," + addressInput.getPais() + "," + addressInput.getCodigoPostal();
+        return address;
+    }
+
+
+
 }
