@@ -1,11 +1,11 @@
-package com.brixton.gestiontareas.dto.request;
+package com.brixton.gestiontareas.dto.generic;
 
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
-public class AssignTaskRequestDTO {
+public class AssignTaskDTO {
     private int idTask;
     private int idUser;
     private String dateAssign;

@@ -1,5 +1,7 @@
 package com.brixton.gestiontareas.dto.request;
 
+import com.brixton.gestiontareas.dto.generic.AssignTaskDTO;
+import com.brixton.gestiontareas.dto.generic.UserDTO;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -11,6 +13,6 @@ public class TaskRequestDTO {
     private String description;
     private String dateDue;
     private String status;
-    private UserRequestDTO user;
-    private AssignTaskRequestDTO assignTask;
+    private UserDTO user;
+    private AssignTaskDTO assignTask;
 }

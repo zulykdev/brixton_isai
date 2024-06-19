@@ -1,6 +1,7 @@
 package com.brixton.gestiontareas.controller;
 
 import com.brixton.gestiontareas.dto.request.TaskRequestDTO;
+import com.brixton.gestiontareas.dto.request.TrackingTaskRequestDTO;
 import com.brixton.gestiontareas.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,8 @@ public class TaskController {
 
     @PutMapping("/{taskId}/progress")
     public ResponseEntity<Object> updateTrackingTask(@PathVariable int taskId, @RequestBody TaskRequestDTO taskActualizar) {
-        Object taskToUpdate = taskService.updateTrackingTask(taskId, taskActualizar);
-        if(taskToUpdate != null){
-            return ResponseEntity.ok(taskToUpdate);
-        }
-        return ResponseEntity.notFound().build();
-        //return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        return ResponseEntity.ok(taskService.updateTrackingTask(taskId, taskActualizar));
+
     }
     @GetMapping("/{taskId}/assignee")
     public ResponseEntity<Object> getUser(@PathVariable int taskId){

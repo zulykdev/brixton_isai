@@ -1,6 +1,7 @@
 package com.brixton.gestiontareas.service;
 
 import com.brixton.gestiontareas.dto.request.TaskRequestDTO;
+import com.brixton.gestiontareas.dto.response.TaskResponseDTO;
 import com.brixton.gestiontareas.model.Task;
 import com.brixton.gestiontareas.model.mapper.CustomDateDeserializer;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +46,21 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public Object newTask(TaskRequestDTO newTask) {
+        try {
+            String jsonInput = objectMapper.writeValueAsString(newTask);
+            Task task = objectMapper.readValue(jsonInput, Task.class);
+            //order.getInvoice().setOrderId(order.getId());
+            //order.getInvoice().getOrdersLine().get(order.getId());
+            task.setCreatedAt(LocalDateTime.now());
+            task.setCreatedBy(USER_APP);
+            tasks.put(task.getId(), task);
+            String jsonOutput = objectMapper.writeValueAsString(task);
+            TaskResponseDTO output = objectMapper.readValue(jsonOutput, TaskResponseDTO.class);
+            return output;
 
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
